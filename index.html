@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+               maximum-scale=1.0, user-scalable=no">
+
+<title>Tap Master</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    min-height: 100dvh;
+
+    background:
+        radial-gradient(circle at top, #292060, transparent 45%),
+        linear-gradient(160deg, #080b1c, #160b36);
+
+    color: white;
+    font-family: Arial, sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    touch-action: manipulation;
+}
+
+.game {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    margin: 5px 0;
+    font-size: 40px;
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    color: #aaa9c7;
+    margin-bottom: 22px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 25px;
+}
+
+.stat {
+    background: rgba(255,255,255,0.09);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 15px;
+    padding: 10px 5px;
+}
+
+.stat-title {
+    font-size: 12px;
+    color: #aaa9c7;
+}
+
+.stat-value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 3px;
+}
+
+#tapArea {
+    position: relative;
+    width: 260px;
+    height: 260px;
+    margin: auto;
+}
+
+#tapButton {
+    position: absolute;
+
+    width: 240px;
+    height: 240px;
+
+    left: 10px;
+    top: 10px;
+
+    border-radius: 50%;
+    border: none;
+
+    background:
+        radial-gradient(circle at 35% 30%, #ffffff, transparent 5%),
+        linear-gradient(145deg, #00ff9d, #00aaff);
+
+    color: #06121b;
+
+    font-size: 40px;
+    font-weight: 900;
+
+    box-shadow:
+        0 0 25px rgba(0,255,170,0.5),
+        0 15px 50px rgba(0,170,255,0.25);
+
+    touch-action: manipulation;
+
+    cursor: pointer;
+
+    transition: transform 0.08s;
+}
+
+#tapButton:active {
+    transform: scale(0.92);
+}
+
+.pulse {
+    animation: pulse 0.25s ease-out;
+}
+
+@keyframes pulse {
+
+    0% {
+        box-shadow:
+        0 0 25px rgba(0,255,170,0.5),
+        0 15px 50px rgba(0,170,255,0.25);
+    }
+
+    50% {
+        box-shadow:
+        0 0 70px rgba(0,255,170,1),
+        0 0 100px rgba(0,170,255,0.7);
+    }
+
+    100% {
+        box-shadow:
+        0 0 25px rgba(0,255,170,0.5),
+        0 15px 50px rgba(0,170,255,0.25);
+    }
+
+}
+
+#message {
+    min-height: 30px;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #d9d8f0;
+}
+
+#combo {
+    height: 35px;
+    margin-top: 5px;
+    font-size: 25px;
+    font-weight: bold;
+    color: #ffcc00;
+}
+
+#startButton {
+    display: none;
+
+    margin: 15px auto;
+
+    padding: 14px 35px;
+
+    border: none;
+    border-radius: 14px;
+
+    background: linear-gradient(135deg, #ffcc00, #ff9500);
+
+    color: #171000;
+
+    font-size: 19px;
+    font-weight: bold;
+
+    touch-action: manipulation;
+}
+
+.coin {
+    position: fixed;
+    font-size: 25px;
+    pointer-events: none;
+
+    animation: coinAnimation 0.8s ease-out forwards;
+}
+
+@keyframes coinAnimation {
+
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100px) scale(1.5);
+        opacity: 0;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="game">
+
+```
+<h1>⚡ TAP MASTER</h1>
+
+<div class="subtitle">
+    Quanto riesci a fare?
+</div>
+
+<div class="stats">
+
+    <div class="stat">
+        <div class="stat-title">TEMPO</div>
+        <div class="stat-value">
+            ⏱️ <span id="time">30</span>
+        </div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-title">PUNTI</div>
+        <div class="stat-value">
+            🏆 <span id="score">0</span>
+        </div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-title">MONETE</div>
+        <div class="stat-value">
+            🪙 <span id="coins">0</span>
+        </div>
+    </div>
+
+</div>
+
+<div id="tapArea">
+
+    <button id="tapButton" type="button">
+        TAP!
+    </button>
+
+</div>
+
+<div id="combo"></div>
+
+<div id="message">
+    Tocca per iniziare!
+</div>
+
+<button id="startButton" type="button">
+    🔄 GIOCA ANCORA
+</button>
+```
+
+</div>
+
+<script>
+
+let score = 0;
+
+let coins =
+    Number(localStorage.getItem("coins")) || 0;
+
+let best =
+    Number(localStorage.getItem("best")) || 0;
+
+let time = 30;
+let combo = 0;
+
+let playing = false;
+let timer = null;
+
+const tapButton =
+    document.getElementById("tapButton");
+
+const startButton =
+    document.getElementById("startButton");
+
+const scoreText =
+    document.getElementById("score");
+
+const timeText =
+    document.getElementById("time");
+
+const coinsText =
+    document.getElementById("coins");
+
+const comboText =
+    document.getElementById("combo");
+
+const message =
+    document.getElementById("message");
+
+coinsText.textContent = coins;
+
+
+// FUNZIONE TAP
+function handleTap(event) {
+
+    if (event) {
+        event.preventDefault();
+    }
+
+    // Primo tap: avvia la partita
+    if (!playing) {
+        startGame();
+        return;
+    }
+
+    score++;
+
+    combo++;
+
+    let bonus = 0;
+
+    if (combo >= 10) {
+        bonus = 1;
+    }
+
+    if (combo >= 25) {
+        bonus = 2;
+    }
+
+    if (combo >= 50) {
+        bonus = 5;
+    }
+
+    score += bonus;
+
+    // Moneta ogni 5 combo
+    if (combo % 5 === 0) {
+
+        coins++;
+
+        localStorage.setItem(
+            "coins",
+            coins
+        );
+
+        coinsText.textContent = coins;
+
+        let x = window.innerWidth / 2;
+        let y = window.innerHeight / 2;
+
+        if (event &&
+            event.clientX &&
+            event.clientY) {
+
+            x = event.clientX;
+            y = event.clientY;
+        }
+
+        createCoin(x, y);
+    }
+
+    scoreText.textContent = score;
+
+    comboText.textContent =
+        combo >= 10
+        ? "🔥 COMBO x" + combo
+        : "";
+
+    tapButton.classList.remove("pulse");
+
+    void tapButton.offsetWidth;
+
+    tapButton.classList.add("pulse");
+}
+
+
+// POINTER
+tapButton.addEventListener(
+    "pointerdown",
+    handleTap,
+    { passive: false }
+);
+
+
+// TOUCH
+tapButton.addEventListener(
+    "touchstart",
+    handleTap,
+    { passive: false }
+);
+
+
+// CLICK
+tapButton.addEventListener(
+    "click",
+    function(event) {
+
+        // Il click può essere generato
+        // dopo il touch. Se la partita è già
+        // iniziata, lo ignoriamo per evitare
+        // doppi tap.
+
+        if (event.detail === 0) {
+            handleTap(event);
+        }
+
+    }
+);
+
+
+// ANIMAZIONE MONETA
+function createCoin(x, y) {
+
+    const coin =
+        document.createElement("div");
+
+    coin.className = "coin";
+
+    coin.textContent = "🪙";
+
+    coin.style.left = x + "px";
+    coin.style.top = y + "px";
+
+    document.body.appendChild(coin);
+
+    setTimeout(function() {
+        coin.remove();
+    }, 800);
+}
+
+
+// INIZIO PARTITA
+function startGame() {
+
+    score = 0;
+    time = 30;
+    combo = 0;
+
+    playing = true;
+
+    scoreText.textContent = score;
+    timeText.textContent = time;
+
+    comboText.textContent = "";
+
+    message.textContent =
+        "🔥 Tocca più velocemente possibile!";
+
+    startButton.style.display = "none";
+
+    clearInterval(timer);
+
+    timer = setInterval(function() {
+
+        time--;
+
+        timeText.textContent = time;
+
+        if (time === 20) {
+            message.textContent =
+                "⚡ Più veloce!";
+        }
+
+        if (time === 10) {
+            message.textContent =
+                "🔥 ULTIMI 10 SECONDI!";
+        }
+
+        if (time <= 0) {
+            endGame();
+        }
+
+    }, 1000);
+}
+
+
+// FINE PARTITA
+function endGame() {
+
+    playing = false;
+
+    clearInterval(timer);
+
+    if (score > best) {
+
+        best = score;
+
+        localStorage.setItem(
+            "best",
+            best
+        );
+
+        message.textContent =
+            "🏆 NUOVO RECORD! " +
+            score +
+            " PUNTI!";
+
+    } else {
+
+        message.textContent =
+            "🎉 Hai fatto " +
+            score +
+            " punti!";
+
+    }
+
+    comboText.textContent =
+        "🏆 Record: " + best;
+
+    startButton.style.display =
+        "block";
+}
+
+
+// RICOMINCIA
+startButton.addEventListener(
+    "pointerdown",
+    function(event) {
+
+        event.preventDefault();
+
+        startGame();
+
+    },
+    { passive: false }
+);
+
+</script>
+
+</body>
+</html>
