@@ -31,15 +31,15 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
-    min-height: 100%;
+    height: 100%;
+
+    overflow: hidden;
 }
 
 body {
 
     min-height: 100vh;
     min-height: 100dvh;
-
-    overflow: hidden;
 
     background:
         radial-gradient(
@@ -66,7 +66,7 @@ body {
 
 
 /* =========================
-   CONTENITORE
+   CONTENITORE PRINCIPALE
    ========================= */
 
 .game {
@@ -74,7 +74,18 @@ body {
     width: 100%;
     max-width: 500px;
 
-    padding: 20px;
+    height: 100dvh;
+
+    padding:
+        8px 15px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
 
     text-align: center;
 }
@@ -86,18 +97,26 @@ body {
 
 h1 {
 
-    margin: 5px 0;
+    margin:
+        0 0 2px;
 
-    font-size: 40px;
+    font-size:
+        clamp(27px, 8vw, 36px);
 
-    letter-spacing: 2px;
+    letter-spacing:
+        2px;
 }
 
 .subtitle {
 
-    color: #aaa9c7;
+    color:
+        #aaa9c7;
 
-    margin-bottom: 18px;
+    font-size:
+        14px;
+
+    margin-bottom:
+        8px;
 }
 
 
@@ -107,7 +126,8 @@ h1 {
 
 .coinCounter {
 
-    display: inline-block;
+    display:
+        inline-block;
 
     background:
         rgba(255,255,255,0.09);
@@ -116,16 +136,20 @@ h1 {
         1px solid
         rgba(255,255,255,0.1);
 
-    border-radius: 20px;
+    border-radius:
+        20px;
 
     padding:
-        8px 15px;
+        5px 13px;
 
-    margin-bottom: 18px;
+    margin-bottom:
+        8px;
 
-    font-size: 18px;
+    font-size:
+        16px;
 
-    font-weight: bold;
+    font-weight:
+        bold;
 }
 
 
@@ -135,14 +159,20 @@ h1 {
 
 .stats {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(2, 1fr);
 
-    gap: 8px;
+    gap:
+        7px;
 
-    margin-bottom: 22px;
+    width:
+        min(330px, 90vw);
+
+    margin-bottom:
+        8px;
 }
 
 .stat {
@@ -154,25 +184,52 @@ h1 {
         1px solid
         rgba(255,255,255,0.08);
 
-    border-radius: 15px;
+    border-radius:
+        13px;
 
-    padding: 10px 5px;
+    padding:
+        6px 5px;
 }
 
 .stat-title {
 
-    font-size: 12px;
+    font-size:
+        10px;
 
-    color: #aaa9c7;
+    color:
+        #aaa9c7;
 }
 
 .stat-value {
 
-    font-size: 22px;
+    font-size:
+        19px;
 
-    font-weight: bold;
+    font-weight:
+        bold;
 
-    margin-top: 3px;
+    margin-top:
+        2px;
+}
+
+
+/* =========================
+   AREA TAP
+   ========================= */
+
+#tapArea {
+
+    position:
+        relative;
+
+    width:
+        220px;
+
+    height:
+        220px;
+
+    margin:
+        3px auto;
 }
 
 
@@ -180,29 +237,28 @@ h1 {
    PULSANTE TAP
    ========================= */
 
-#tapArea {
-
-    position: relative;
-
-    width: 260px;
-    height: 260px;
-
-    margin: auto;
-}
-
 #tapButton {
 
-    position: absolute;
+    position:
+        absolute;
 
-    width: 240px;
-    height: 240px;
+    width:
+        200px;
 
-    left: 10px;
-    top: 10px;
+    height:
+        200px;
 
-    border-radius: 50%;
+    left:
+        10px;
 
-    border: none;
+    top:
+        10px;
+
+    border-radius:
+        50%;
+
+    border:
+        none;
 
     background:
         linear-gradient(
@@ -211,22 +267,27 @@ h1 {
             #00aaff
         );
 
-    color: #06121b;
+    color:
+        #06121b;
 
-    font-size: 40px;
+    font-size:
+        34px;
 
-    font-weight: 900;
+    font-weight:
+        900;
 
     box-shadow:
         0 0 25px
         rgba(0,255,170,0.5),
 
-        0 15px 50px
+        0 12px 40px
         rgba(0,170,255,0.25);
 
-    touch-action: manipulation;
+    touch-action:
+        manipulation;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
     transition:
         transform 0.08s;
@@ -240,7 +301,7 @@ h1 {
 
 
 /* =========================
-   ANIMAZIONE
+   ANIMAZIONE TAP
    ========================= */
 
 .pulse {
@@ -259,17 +320,17 @@ h1 {
             0 0 25px
             rgba(0,255,170,0.5),
 
-            0 15px 50px
+            0 12px 40px
             rgba(0,170,255,0.25);
     }
 
     50% {
 
         box-shadow:
-            0 0 70px
+            0 0 65px
             rgba(0,255,170,1),
 
-            0 0 100px
+            0 0 90px
             rgba(0,170,255,0.7);
     }
 
@@ -279,7 +340,7 @@ h1 {
             0 0 25px
             rgba(0,255,170,0.5),
 
-            0 15px 50px
+            0 12px 40px
             rgba(0,170,255,0.25);
     }
 }
@@ -291,15 +352,20 @@ h1 {
 
 #combo {
 
-    height: 35px;
+    height:
+        27px;
 
-    margin-top: 5px;
+    margin-top:
+        0;
 
-    font-size: 24px;
+    font-size:
+        20px;
 
-    font-weight: bold;
+    font-weight:
+        bold;
 
-    color: #ffcc00;
+    color:
+        #ffcc00;
 }
 
 
@@ -309,26 +375,32 @@ h1 {
 
 .combo-container {
 
-    width: 260px;
+    width:
+        220px;
 
-    height: 9px;
+    height:
+        7px;
 
     margin:
-        5px auto 0;
+        2px auto 0;
 
     background:
         rgba(255,255,255,0.12);
 
-    border-radius: 20px;
+    border-radius:
+        20px;
 
-    overflow: hidden;
+    overflow:
+        hidden;
 }
 
 #comboBar {
 
-    width: 0%;
+    width:
+        0%;
 
-    height: 100%;
+    height:
+        100%;
 
     background:
         linear-gradient(
@@ -338,7 +410,8 @@ h1 {
             #ffcc00
         );
 
-    border-radius: 20px;
+    border-radius:
+        20px;
 
     transition:
         width 0.05s linear;
@@ -351,13 +424,17 @@ h1 {
 
 #message {
 
-    min-height: 30px;
+    min-height:
+        25px;
 
-    margin-top: 18px;
+    margin-top:
+        7px;
 
-    font-size: 18px;
+    font-size:
+        15px;
 
-    color: #d9d8f0;
+    color:
+        #d9d8f0;
 }
 
 
@@ -367,28 +444,32 @@ h1 {
 
 .actionButton {
 
-    display: block;
-
     margin:
-        12px auto;
+        5px auto;
 
     padding:
-        13px 28px;
+        10px 24px;
 
-    border: none;
+    border:
+        none;
 
-    border-radius: 14px;
+    border-radius:
+        12px;
 
-    font-size: 18px;
+    font-size:
+        16px;
 
-    font-weight: bold;
+    font-weight:
+        bold;
 
-    touch-action: manipulation;
+    touch-action:
+        manipulation;
 }
 
 #startButton {
 
-    display: none;
+    display:
+        none;
 
     background:
         linear-gradient(
@@ -397,7 +478,8 @@ h1 {
             #ff9500
         );
 
-    color: #171000;
+    color:
+        #171000;
 }
 
 #shopButton {
@@ -409,28 +491,34 @@ h1 {
             #c03cff
         );
 
-    color: white;
+    color:
+        white;
 }
 
 
 /* =========================
-   SCHERMATA NEGOZIO
+   NEGOZIO
    ========================= */
 
 #shopScreen {
 
-    display: none;
+    display:
+        none;
 
-    position: fixed;
+    position:
+        fixed;
 
-    inset: 0;
+    inset:
+        0;
 
-    z-index: 100;
+    z-index:
+        100;
 
-    overflow-y: auto;
+    overflow-y:
+        auto;
 
     padding:
-        25px 15px 40px;
+        15px;
 
     background:
         radial-gradient(
@@ -447,44 +535,55 @@ h1 {
 
 .shopContent {
 
-    width: 100%;
+    width:
+        100%;
 
-    max-width: 500px;
+    max-width:
+        500px;
 
-    margin: auto;
+    margin:
+        auto;
 
-    text-align: center;
+    text-align:
+        center;
 }
 
 .shopTitle {
 
-    font-size: 34px;
+    font-size:
+        30px;
 
-    font-weight: bold;
+    font-weight:
+        bold;
 
-    margin-bottom: 10px;
+    margin-bottom:
+        5px;
 }
 
 .shopCoins {
 
-    font-size: 20px;
+    font-size:
+        18px;
 
-    margin-bottom: 20px;
+    margin-bottom:
+        12px;
 }
 
 .skinGrid {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(2, 1fr);
 
-    gap: 12px;
+    gap:
+        9px;
 }
 
 
 /* =========================
-   CARD SKIN
+   SKIN CARD
    ========================= */
 
 .skin {
@@ -496,59 +595,65 @@ h1 {
         1px solid
         rgba(255,255,255,0.1);
 
-    border-radius: 18px;
+    border-radius:
+        15px;
 
-    padding: 15px 10px;
+    padding:
+        10px 8px;
 }
 
 .skinName {
 
-    font-size: 18px;
+    font-size:
+        16px;
 
-    font-weight: bold;
+    font-weight:
+        bold;
 
-    margin-bottom: 10px;
+    margin-bottom:
+        6px;
 }
-
-
-/* =========================
-   ANTEPRIMA SKIN
-   ========================= */
 
 .skinPreview {
 
-    width: 90px;
-    height: 90px;
+    width:
+        65px;
+
+    height:
+        65px;
 
     margin:
-        5px auto 12px;
+        4px auto 8px;
 
-    border-radius: 50%;
+    border-radius:
+        50%;
 }
-
-
-/* =========================
-   BOTTONI SKIN
-   ========================= */
 
 .skinButton {
 
-    width: 100%;
+    width:
+        100%;
 
-    padding: 10px;
+    padding:
+        8px;
 
-    border: none;
+    border:
+        none;
 
-    border-radius: 10px;
+    border-radius:
+        9px;
 
     background:
         #25233b;
 
-    color: white;
+    color:
+        white;
 
-    font-size: 15px;
+    font-size:
+        13px;
 
-    font-weight: bold;
+    font-weight:
+        bold;
 }
 
 .skinButton.selected {
@@ -573,37 +678,46 @@ h1 {
 
 #closeShopButton {
 
-    margin-top: 25px;
+    margin-top:
+        15px;
 
     padding:
-        13px 30px;
+        11px 27px;
 
-    border: none;
+    border:
+        none;
 
-    border-radius: 12px;
+    border-radius:
+        11px;
 
     background:
         #333047;
 
-    color: white;
+    color:
+        white;
 
-    font-size: 17px;
+    font-size:
+        16px;
 
-    font-weight: bold;
+    font-weight:
+        bold;
 }
 
 
 /* =========================
-   MONETA ANIMATA
+   MONETA
    ========================= */
 
 .coin {
 
-    position: fixed;
+    position:
+        fixed;
 
-    font-size: 25px;
+    font-size:
+        24px;
 
-    pointer-events: none;
+    pointer-events:
+        none;
 
     animation:
         coinAnimation
@@ -620,7 +734,8 @@ h1 {
             translateY(0)
             scale(1);
 
-        opacity: 1;
+        opacity:
+            1;
     }
 
     100% {
@@ -629,7 +744,58 @@ h1 {
             translateY(-100px)
             scale(1.5);
 
-        opacity: 0;
+        opacity:
+            0;
+    }
+}
+
+
+/* =========================
+   SCHERMI MOLTO BASSI
+   ========================= */
+
+@media (
+    max-height: 700px
+) {
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .subtitle {
+        margin-bottom: 4px;
+    }
+
+    .coinCounter {
+        margin-bottom: 5px;
+    }
+
+    .stats {
+        margin-bottom: 3px;
+    }
+
+    #tapArea {
+        width: 185px;
+        height: 185px;
+    }
+
+    #tapButton {
+        width: 165px;
+        height: 165px;
+        font-size: 30px;
+    }
+
+    .combo-container {
+        width: 190px;
+    }
+
+    #message {
+        margin-top: 4px;
+    }
+
+    .actionButton {
+        margin: 3px auto;
+        padding: 8px 20px;
     }
 }
 
@@ -765,7 +931,7 @@ h1 {
 </div>
 
 <!-- =========================
-     NEGOZIO
+     SCHERMATA NEGOZIO
      ========================= -->
 
 <div id="shopScreen">
@@ -793,8 +959,6 @@ h1 {
 
     <div class="skinGrid">
 
-
-        <!-- NEON -->
 
         <div class="skin">
 
@@ -826,8 +990,6 @@ h1 {
         </div>
 
 
-        <!-- OCEAN -->
-
         <div class="skin">
 
             <div class="skinName">
@@ -857,8 +1019,6 @@ h1 {
 
         </div>
 
-
-        <!-- PURPLE -->
 
         <div class="skin">
 
@@ -890,8 +1050,6 @@ h1 {
         </div>
 
 
-        <!-- FIRE -->
-
         <div class="skin">
 
             <div class="skinName">
@@ -922,8 +1080,6 @@ h1 {
         </div>
 
 
-        <!-- GOLD -->
-
         <div class="skin">
 
             <div class="skinName">
@@ -953,8 +1109,6 @@ h1 {
 
         </div>
 
-
-        <!-- RAINBOW -->
 
         <div class="skin">
 
@@ -1168,23 +1322,18 @@ function updateCoins() {
         coins;
 }
 
-
 updateCoins();
 
 
 /* =========================
-   APPLICA SKIN
+   SKIN
    ========================= */
 
 function applySkin() {
 
-    const skin =
-        skins[selectedSkin];
-
     tapButton.style.background =
-        skin.background;
+        skins[selectedSkin].background;
 }
-
 
 applySkin();
 
@@ -1226,11 +1375,6 @@ function handleTap(event) {
         now - lastTap;
 
 
-    /*
-       Se passano più di
-       700 ms perdiamo la combo.
-    */
-
     if (
         lastTap > 0 &&
         difference > 700
@@ -1248,38 +1392,23 @@ function handleTap(event) {
     combo++;
 
 
-    /* =========================
-       MOLTIPLICATORE
-       ========================= */
-
     let multiplier = 1;
 
 
     if (combo >= 5) {
-
         multiplier = 2;
-
     }
-
 
     if (combo >= 15) {
-
         multiplier = 3;
-
     }
-
 
     if (combo >= 30) {
-
         multiplier = 4;
-
     }
 
-
     if (combo >= 50) {
-
         multiplier = 5;
-
     }
 
 
@@ -1296,10 +1425,6 @@ function handleTap(event) {
         "  +" +
         multiplier;
 
-
-    /* =========================
-       MONETA
-       ========================= */
 
     if (
         combo % 5 === 0
@@ -1654,7 +1779,7 @@ startButton.addEventListener(
 
 
 /* =========================
-   APRI NEGOZIO
+   NEGOZIO
    ========================= */
 
 shopButton.addEventListener(
@@ -1675,10 +1800,6 @@ shopButton.addEventListener(
 );
 
 
-/* =========================
-   CHIUDI NEGOZIO
-   ========================= */
-
 closeShopButton.addEventListener(
     "pointerdown",
     function(event) {
@@ -1696,7 +1817,7 @@ closeShopButton.addEventListener(
 
 
 /* =========================
-   ACQUISTO SKIN
+   ACQUISTA / SELEZIONA
    ========================= */
 
 function buyOrSelectSkin(name) {
@@ -1710,11 +1831,6 @@ function buyOrSelectSkin(name) {
             "skin_" + name
         ) === "true";
 
-
-    /*
-       Se già posseduta,
-       la selezioniamo.
-    */
 
     if (
         owned ||
@@ -1739,10 +1855,6 @@ function buyOrSelectSkin(name) {
     }
 
 
-    /*
-       Controlliamo le monete.
-    */
-
     if (
         coins < skin.cost
     ) {
@@ -1754,10 +1866,6 @@ function buyOrSelectSkin(name) {
         return;
     }
 
-
-    /*
-       Acquista.
-    */
 
     coins -= skin.cost;
 
@@ -1812,11 +1920,15 @@ function updateShop() {
     names.forEach(
         function(name) {
 
+            const id =
+                "skin" +
+                name.charAt(0).toUpperCase() +
+                name.slice(1);
+
+
             const button =
                 document.getElementById(
-                    "skin" +
-                    name.charAt(0).toUpperCase() +
-                    name.slice(1)
+                    id
                 );
 
 
@@ -1941,7 +2053,7 @@ document.getElementById(
 
 
 /* =========================
-   TAP DEL GIOCO
+   TAP
    ========================= */
 
 tapButton.addEventListener(
