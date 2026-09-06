@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tap Master</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    color: white;
+    text-align: center;
+    background: linear-gradient(135deg, #160b2e, #071b38);
+}
+
+.game {
+    width: 100%;
+    max-width: 520px;
+    margin: auto;
+    padding: 20px 15px;
+}
+
+h1 {
+    font-size: 38px;
+    margin: 10px 0 20px;
+}
+
+.panel {
+    background: rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.stat {
+    background: rgba(0,0,0,0.25);
+    padding: 10px 5px;
+    border-radius: 12px;
+}
+
+.stat b {
+    display: block;
+    font-size: 22px;
+    margin-top: 5px;
+}
+
+button {
+    border: none;
+    border-radius: 14px;
+    padding: 14px 18px;
+    font-size: 17px;
+    font-weight: bold;
+    color: white;
+    background: #6840ff;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.main-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+#tapButton,
+#battleTapButton {
+    display: block;
+    width: 210px;
+    height: 210px;
+    margin: 25px auto;
+    border-radius: 50%;
+    font-size: 34px;
+    background: linear-gradient(145deg, #8d5cff, #4520c9);
+    border: 8px solid rgba(255,255,255,0.15);
+}
+
+.bar {
+    width: 100%;
+    height: 14px;
+    background: #222;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.bar div {
+    height: 100%;
+    width: 100%;
+    background: #7c4dff;
+}
+
+.message {
+    min-height: 25px;
+    margin: 15px;
+    font-weight: bold;
+}
+
+.hidden {
+    display: none;
+}
+
+/* AVVENTURA */
+
+.level-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.level {
+    padding: 12px 5px;
+}
+
+.locked {
+    opacity: 0.35;
+}
+
+/* NEGOZIO */
+
+.shop-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.item {
+    padding: 15px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.07);
+}
+
+.item button {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.small {
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+/* BOSS */
+
+#enemyEmoji {
+    font-size: 80px;
+    margin: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+
+<h1>⚡ TAP MASTER</h1>
+
+<!-- ================= GIOCO ================= -->
+
+<section id="homeScreen">
+
+<div class="panel">
+
+<div class="stats">
+
+<div class="stat">
+🪙 Monete
+<b id="coins">0</b>
+</div>
+
+<div class="stat">
+⏱️ Tempo
+<b id="time">30</b>
+</div>
+
+<div class="stat">
+🏆 Record
+<b id="score">0</b>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<div id="combo">
+Combo: x1
+</div>
+
+<div class="bar">
+<div id="comboBar"></div>
+</div>
+
+<button id="tapButton">
+TAP!
+</button>
+
+<div id="message">
+Premi START per iniziare
+</div>
+
+<div class="main-buttons">
+
+<button id="startButton">
+▶ START
+</button>
+
+<button id="shopButton">
+🛒 NEGOZIO
+</button>
+
+<button id="adventureButton">
+⚔️ AVVENTURA
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= NEGOZIO ================= -->
+
+<section id="shopScreen" class="hidden">
+
+<div class="panel">
+
+<h2>🛒 Negozio</h2>
+
+<p>
+Monete:
+<b id="shopCoins">0</b>
+</p>
+
+<div class="shop-grid">
+
+<div class="item">
+
+⚔️ SPADA
+
+<br>
+
+<span class="small">
++1 danno in Avventura
+</span>
+
+<button
+data-item="weapon"
+data-cost="100">
+100 🪙
+</button>
+
+</div>
+
+
+<div class="item">
+
+💰 PORTAFORTUNA
+
+<br>
+
+<span class="small">
++1 moneta ogni 5 combo
+</span>
+
+<button
+data-item="coins"
+data-cost="150">
+150 🪙
+</button>
+
+</div>
+
+
+<div class="item">
+
+🛡️ ARMATURA
+
+<br>
+
+<span class="small">
++10% tempo contro i boss
+</span>
+
+<button
+data-item="armor"
+data-cost="250">
+250 🪙
+</button>
+
+</div>
+
+
+<div class="item">
+
+⚡ GUANTI
+
+<br>
+
+<span class="small">
++1 danno dopo combo 15
+</span>
+
+<button
+data-item="gloves"
+data-cost="300">
+300 🪙
+</button>
+
+</div>
+
+</div>
+
+<div id="shopMessage" class="message"></div>
+
+<button id="closeShopButton">
+← TORNA AL GIOCO
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= AVVENTURA ================= -->
+
+<section id="adventureScreen" class="hidden">
+
+<div class="panel">
+
+<h2>⚔️ AVVENTURA</h2>
+
+<p>
+Livello sbloccato:
+<b id="currentLevel">1</b>
+</p>
+
+<p>
+Record:
+<b id="adventureBest">0</b>
+</p>
+
+<div id="levelGrid" class="level-grid"></div>
+
+<div id="adventureMessage" class="message">
+Scegli un livello
+</div>
+
+<button id="closeAdventureButton">
+← TORNA AL GIOCO
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= BATTAGLIA ================= -->
+
+<section id="battleScreen" class="hidden">
+
+<div class="panel">
+
+<h2 id="enemyName">
+Nemico
+</h2>
+
+<div id="enemyEmoji">
+👾
+</div>
+
+<p>
+❤️
+<span id="enemyHpText">
+0 / 0
+</span>
+</p>
+
+<div class="bar">
+<div id="enemyHpBar"></div>
+</div>
+
+<p>
+⏱️
+<span id="battleTime">0</span>
+</p>
+
+<p id="battleCombo">
+Combo: x1
+</p>
+
+<button id="battleTapButton">
+⚔️ ATTACCA!
+</button>
+
+<div id="battleDamage" class="message"></div>
+
+<div id="battleReward" class="message"></div>
+
+</div>
+
+</section>
+
+</div>
+
+
+<script>
+
+"use strict";
+
+
+/* =====================================================
+   DATI
+===================================================== */
+
+const levels = [
+
+{
+    hp: 35,
+    time: 18,
+    name: "Guardiano",
+    emoji: "👾",
+    reward: 15
+},
+
+{
+    hp: 50,
+    time: 18,
+    name: "Goblin",
+    emoji: "👺",
+    reward: 20
+},
+
+{
+    hp: 70,
+    time: 20,
+    name: "Orco",
+    emoji: "👹",
+    reward: 25
+},
+
+{
+    hp: 90,
+    time: 22,
+    name: "Bestia della Foresta",
+    emoji: "🐺",
+    reward: 35
+},
+
+{
+    hp: 180,
+    time: 30,
+    name: "BOSS — Re Goblin",
+    emoji: "👑👹",
+    reward: 100,
+    boss: true
+}
+
+];
+
+
+/* =====================================================
+   SALVATAGGIO
+===================================================== */
+
+let coins =
+Number(localStorage.getItem("tapmaster_coins")) || 0;
+
+let best =
+Number(localStorage.getItem("tapmaster_best")) || 0;
+
+let adventureLevel =
+Number(localStorage.getItem("tapmaster_level")) || 1;
+
+let adventureBest =
+Number(localStorage.getItem("tapmaster_adventureBest")) || 0;
+
+let equipment =
+JSON.parse(
+localStorage.getItem("tapmaster_equipment") || "{}"
+);
+
+
+/* =====================================================
+   VARIABILI GIOCO
+===================================================== */
+
+let gameRunning = false;
+
+let gameTimer = null;
+
+let gameTime = 30;
+
+let score = 0;
+
+let combo = 0;
+
+
+/* =====================================================
+   VARIABILI BATTAGLIA
+===================================================== */
+
+let battleRunning = false;
+
+let battleTimer = null;
+
+let battleTime = 0;
+
+let battleHp = 0;
+
+let battleMaxHp = 0;
+
+let battleCombo = 0;
+
+let battleIndex = 0;
+
+
+/* =====================================================
+   FUNZIONE ELEMENTI
+===================================================== */
+
+function $(id) {
+
+    return document.getElementById(id);
+
+}
+
+
+/* =====================================================
+   AGGIORNA INTERFACCIA
+===================================================== */
+
+function updateUI() {
+
+    $("coins").textContent = coins;
+
+    $("shopCoins").textContent = coins;
+
+    $("score").textContent = best;
+
+    $("currentLevel").textContent =
+        adventureLevel;
+
+    $("adventureBest").textContent =
+        adventureBest;
+
+}
+
+
+/* =====================================================
+   MOSTRA SCHERMATA
+===================================================== */
+
+function showScreen(id) {
+
+    $("homeScreen").classList.add("hidden");
+
+    $("shopScreen").classList.add("hidden");
+
+    $("adventureScreen").classList.add("hidden");
+
+    $("battleScreen").classList.add("hidden");
+
+    $(id).classList.remove("hidden");
+
+}
+
+
+/* =====================================================
+   SALVA
+===================================================== */
+
+function saveGame() {
+
+    localStorage.setItem(
+        "tapmaster_coins",
+        coins
+    );
+
+    localStorage.setItem(
+        "tapmaster_best",
+        best
+    );
+
+    localStorage.setItem(
+        "tapmaster_level",
+        adventureLevel
+    );
+
+    localStorage.setItem(
+        "tapmaster_adventureBest",
+        adventureBest
+    );
+
+    localStorage.setItem(
+        "tapmaster_equipment",
+        JSON.stringify(equipment)
+    );
+
+    updateUI();
+
+}
+
+
+/* =====================================================
+   MOLTIPLICATORE
+===================================================== */
+
+function getMultiplier(value) {
+
+    if (value >= 50) return 5;
+
+    if (value >= 30) return 4;
+
+    if (value >= 15) return 3;
+
+    if (value >= 5) return 2;
+
+    return 1;
+
+}
+
+
+/* =====================================================
+   START GIOCO
+===================================================== */
+
+function startGame() {
+
+    clearInterval(gameTimer);
+
+    gameRunning = true;
+
+    gameTime = 30;
+
+    score = 0;
+
+    combo = 0;
+
+    $("time").textContent = gameTime;
+
+    $("score").textContent = score;
+
+    $("message").textContent =
+        "Tocca più velocemente che puoi!";
+
+    updateCombo();
+
+    gameTimer = setInterval(function() {
+
+        gameTime--;
+
+        $("time").textContent =
+            gameTime;
+
+        if (gameTime <= 0) {
+
+            endGame();
+
+        }
+
+    }, 1000);
+
+}
+
+
+/* =====================================================
+   TAP
+===================================================== */
+
+function tapGame() {
+
+    if (!gameRunning) {
+
+        return;
+
+    }
+
+    combo++;
+
+    let multiplier =
+        getMultiplier(combo);
+
+    score += multiplier;
+
+
+    if (combo % 5 === 0) {
+
+        if (equipment.coins) {
+
+            coins += 2;
+
+        } else {
+
+            coins += 1;
+
+        }
+
+    }
+
+
+    $("score").textContent =
+        score;
+
+    $("coins").textContent =
+        coins;
+
+    $("message").textContent =
+        "+" + multiplier + " punti!";
+
+    updateCombo();
+
+
+    if (score > best) {
+
+        best = score;
+
+    }
+
+}
+
+
+/* =====================================================
+   COMBO
+===================================================== */
+
+function updateCombo() {
+
+    let multiplier =
+        getMultiplier(combo);
+
+    $("combo").textContent =
+        "Combo: x" +
+        multiplier +
+        " (" +
+        combo +
+        ")";
+
+    let percent =
+        Math.min(100, combo * 2);
+
+    $("comboBar").style.width =
+        percent + "%";
+
+}
+
+
+/* =====================================================
+   FINE PARTITA
+===================================================== */
+
+function endGame() {
+
+    clearInterval(gameTimer);
+
+    gameRunning = false;
+
+    if (score > best) {
+
+        best = score;
+
+    }
+
+    $("message").textContent =
+        "⏰ Fine partita! Punteggio: " +
+        score;
+
+    saveGame();
+
+}
+
+
+/* =====================================================
+   NEGOZIO
+===================================================== */
+
+function openShop() {
+
+    clearInterval(gameTimer);
+
+    gameRunning = false;
+
+    $("shopMessage").textContent = "";
+
+    showScreen("shopScreen");
+
+    updateUI();
+
+}
+
+
+function buyItem(item, cost) {
+
+    if (equipment[item]) {
+
+        $("shopMessage").textContent =
+            "Hai già acquistato questo oggetto.";
+
+        return;
+
+    }
+
+
+    if (coins < cost) {
+
+        $("shopMessage").textContent =
+            "❌ Non hai abbastanza monete.";
+
+        return;
+
+    }
+
+
+    coins -= cost;
+
+    equipment[item] = true;
+
+    $("shopMessage").textContent =
+        "✅ Oggetto acquistato!";
+
+    saveGame();
+
+}
+
+
+/* =====================================================
+   AVVENTURA
+===================================================== */
+
+function openAdventure() {
+
+    clearInterval(gameTimer);
+
+    gameRunning = false;
+
+    showScreen("adventureScreen");
+
+    renderLevels();
+
+}
+
+
+function renderLevels() {
+
+    const grid =
+        $("levelGrid");
+
+    grid.innerHTML = "";
+
+
+    levels.forEach(function(level, index) {
+
+        const number =
+            index + 1;
+
+        const unlocked =
+            number <= adventureLevel;
+
+
+        const button =
+            document.createElement("button");
+
+
+        button.type = "button";
+
+        button.className =
+            "level " +
+            (unlocked ? "" : "locked");
+
+
+        button.textContent =
+            unlocked
+            ? "⚔️ " + number
+            : "🔒 " + number;
+
+
+        if (unlocked) {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    startBattle(index);
+
+                }
+            );
+
+        }
+
+
+        grid.appendChild(button);
+
+    });
+
+}
+
+
+/* =====================================================
+   BATTAGLIA
+===================================================== */
+
+function startBattle(index) {
+
+    const level =
+        levels[index];
+
+    battleIndex =
+        index;
+
+    battleRunning = true;
+
+    battleHp =
+        level.hp;
+
+    battleMaxHp =
+        level.hp;
+
+    battleCombo = 0;
+
+    battleTime =
+        level.time;
+
+
+    if (
+        level.boss &&
+        equipment.armor
+    ) {
+
+        battleTime +=
+            Math.ceil(level.time * 0.1);
+
+    }
+
+
+    $("enemyName").textContent =
+        level.name;
+
+    $("enemyEmoji").textContent =
+        level.emoji;
+
+    $("battleReward").textContent =
+        "Ricompensa: " +
+        level.reward +
+        " 🪙";
+
+    $("battleDamage").textContent =
+        "Attacca il nemico!";
+
+
+    updateBattle();
+
+    showScreen("battleScreen");
+
+
+    clearInterval(battleTimer);
+
+
+    battleTimer =
+        setInterval(function() {
+
+            battleTime--;
+
+            updateBattle();
+
+
+            if (battleTime <= 0) {
+
+                loseBattle();
+
+            }
+
+        }, 1000);
+
+}
+
+
+/* =====================================================
+   ATTACCO
+===================================================== */
+
+function battleAttack() {
+
+    if (!battleRunning) {
+
+        return;
+
+    }
+
+
+    battleCombo++;
+
+
+    let damage = 1;
+
+
+    if (battleCombo >= 50) {
+
+        damage = 5;
+
+    }
+
+    else if (battleCombo >= 30) {
+
+        damage = 4;
+
+    }
+
+    else if (battleCombo >= 15) {
+
+        damage = 3;
+
+    }
+
+    else if (battleCombo >= 5) {
+
+        damage = 2;
+
+    }
+
+
+    if (
+        battleCombo >= 15 &&
+        equipment.gloves
+    ) {
+
+        damage++;
+
+    }
+
+
+    if (equipment.weapon) {
+
+        damage++;
+
+    }
+
+
+    battleHp =
+        Math.max(
+            0,
+            battleHp - damage
+        );
+
+
+    $("battleDamage").textContent =
+        "💥 Danno: " +
+        damage;
+
+
+    updateBattle();
+
+
+    if (battleHp <= 0) {
+
+        winBattle();
+
+    }
+
+}
+
+
+/* =====================================================
+   AGGIORNA BATTAGLIA
+===================================================== */
+
+function updateBattle() {
+
+    $("battleTime").textContent =
+        battleTime;
+
+
+    $("enemyHpText").textContent =
+        battleHp +
+        " / " +
+        battleMaxHp;
+
+
+    $("enemyHpBar").style.width =
+        (battleHp / battleMaxHp * 100) +
+        "%";
+
+
+    $("battleCombo").textContent =
+        "Combo: x" +
+        getMultiplier(battleCombo) +
+        " (" +
+        battleCombo +
+        ")";
+
+}
+
+
+/* =====================================================
+   VITTORIA
+===================================================== */
+
+function winBattle() {
+
+    if (!battleRunning) {
+
+        return;
+
+    }
+
+    battleRunning = false;
+
+    clearInterval(battleTimer);
+
+
+    const level =
+        levels[battleIndex];
+
+
+    coins +=
+        level.reward;
+
+
+    if (
+        battleIndex + 1 >=
+        adventureLevel
+    ) {
+
+        adventureLevel =
+            Math.min(
+                levels.length,
+                battleIndex + 2
+            );
+
+    }
+
+
+    if (
+        adventureLevel >
+        adventureBest
+    ) {
+
+        adventureBest =
+            adventureLevel;
+
+    }
+
+
+    saveGame();
+
+
+    $("battleDamage").textContent =
+        "🏆 VITTORIA!";
+
+
+    $("battleReward").textContent =
+        "Hai ricevuto " +
+        level.reward +
+        " 🪙";
+
+
+    setTimeout(function() {
+
+        showScreen(
+            "adventureScreen"
+        );
+
+        renderLevels();
+
+    }, 1200);
+
+}
+
+
+/* =====================================================
+   SCONFITTA
+===================================================== */
+
+function loseBattle() {
+
+    if (!battleRunning) {
+
+        return;
+
+    }
+
+
+    battleRunning = false;
+
+    clearInterval(battleTimer);
+
+
+    $("battleDamage").textContent =
+        "💀 SCONFITTA!";
+
+
+    $("battleReward").textContent =
+        "Riprova il livello.";
+
+
+    setTimeout(function() {
+
+        showScreen(
+            "adventureScreen"
+        );
+
+    }, 1200);
+
+}
+
+
+/* =====================================================
+   EVENTI PULSANTI
+===================================================== */
+
+$("tapButton").addEventListener(
+    "click",
+    tapGame
+);
+
+
+$("startButton").addEventListener(
+    "click",
+    startGame
+);
+
+
+$("shopButton").addEventListener(
+    "click",
+    openShop
+);
+
+
+$("adventureButton").addEventListener(
+    "click",
+    openAdventure
+);
+
+
+$("closeShopButton").addEventListener(
+    "click",
+    function() {
+
+        showScreen("homeScreen");
+
+    }
+);
+
+
+$("closeAdventureButton").addEventListener(
+    "click",
+    function() {
+
+        showScreen("homeScreen");
+
+    }
+);
+
+
+$("battleTapButton").addEventListener(
+    "click",
+    battleAttack
+);
+
+
+/* =====================================================
+   PULSANTI NEGOZIO
+===================================================== */
+
+document
+.querySelectorAll("[data-item]")
+.forEach(function(button) {
+
+    button.addEventListener(
+        "click",
+        function() {
+
+            const item =
+                button.dataset.item;
+
+            const cost =
+                Number(
+                    button.dataset.cost
+                );
+
+            buyItem(
+                item,
+                cost
+            );
+
+        }
+    );
+
+});
+
+
+/* =====================================================
+   AVVIO
+===================================================== */
+
+updateUI();
+
+renderLevels();
+
+</script>
+
+</body>
+</html>
