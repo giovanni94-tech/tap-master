@@ -3,9 +3,12 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
+
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-               maximum-scale=1.0, user-scalable=no">
+   content="width=device-width,
+            initial-scale=1.0,
+            maximum-scale=1.0,
+            user-scalable=no">
 
 <title>Tap Master</title>
 
@@ -179,7 +182,10 @@ h1 {
     border: none;
     border-radius: 14px;
 
-    background: linear-gradient(135deg, #ffcc00, #ff9500);
+    background:
+        linear-gradient(135deg,
+        #ffcc00,
+        #ff9500);
 
     color: #171000;
 
@@ -194,18 +200,27 @@ h1 {
     font-size: 25px;
     pointer-events: none;
 
-    animation: coinAnimation 0.8s ease-out forwards;
+    animation:
+        coinAnimation
+        0.8s ease-out
+        forwards;
 }
 
 @keyframes coinAnimation {
 
     0% {
-        transform: translateY(0) scale(1);
+        transform:
+            translateY(0)
+            scale(1);
+
         opacity: 1;
     }
 
     100% {
-        transform: translateY(-100px) scale(1.5);
+        transform:
+            translateY(-100px)
+            scale(1.5);
+
         opacity: 0;
     }
 
@@ -229,44 +244,70 @@ h1 {
 <div class="stats">
 
     <div class="stat">
-        <div class="stat-title">TEMPO</div>
+
+        <div class="stat-title">
+            TEMPO
+        </div>
+
         <div class="stat-value">
             ⏱️ <span id="time">30</span>
         </div>
+
     </div>
 
     <div class="stat">
-        <div class="stat-title">PUNTI</div>
+
+        <div class="stat-title">
+            PUNTI
+        </div>
+
         <div class="stat-value">
             🏆 <span id="score">0</span>
         </div>
+
     </div>
 
     <div class="stat">
-        <div class="stat-title">MONETE</div>
+
+        <div class="stat-title">
+            MONETE
+        </div>
+
         <div class="stat-value">
             🪙 <span id="coins">0</span>
         </div>
+
     </div>
 
 </div>
 
+
 <div id="tapArea">
 
-    <button id="tapButton" type="button">
+    <button
+        id="tapButton"
+        type="button">
+
         TAP!
+
     </button>
 
 </div>
 
+
 <div id="combo"></div>
 
 <div id="message">
-    Tocca per iniziare!
+    Premi TAP per iniziare!
 </div>
 
-<button id="startButton" type="button">
+
+<button
+    id="startButton"
+    type="button">
+
     🔄 GIOCA ANCORA
+
 </button>
 ```
 
@@ -283,10 +324,15 @@ let best =
     Number(localStorage.getItem("best")) || 0;
 
 let time = 30;
+
 let combo = 0;
 
 let playing = false;
+
+let gameStarted = false;
+
 let timer = null;
+
 
 const tapButton =
     document.getElementById("tapButton");
@@ -309,43 +355,81 @@ const comboText =
 const message =
     document.getElementById("message");
 
+
 coinsText.textContent = coins;
 
 
-// FUNZIONE TAP
+/* =========================
+   TAP DEL GIOCO
+   ========================= */
+
 function handleTap(event) {
 
-    if (event) {
-        event.preventDefault();
-    }
+    event.preventDefault();
 
-    // Primo tap: avvia la partita
-    if (!playing) {
+    /*
+       Se la partita non è ancora
+       iniziata, il primo TAP
+       serve solo ad avviarla.
+    */
+
+    if (!gameStarted) {
+
         startGame();
+
         return;
     }
+
+
+    /*
+       Se la partita è finita,
+       TAP non fa assolutamente
+       nulla.
+    */
+
+    if (!playing) {
+        return;
+    }
+
+
+    /* =========================
+       PUNTEGGIO
+       ========================= */
 
     score++;
 
     combo++;
 
+
+    /*
+       Bonus combo.
+       Il bonus viene dato
+       solamente al raggiungimento
+       della soglia.
+    */
+
     let bonus = 0;
 
-    if (combo >= 10) {
+    if (combo === 10) {
         bonus = 1;
     }
 
-    if (combo >= 25) {
+    if (combo === 25) {
         bonus = 2;
     }
 
-    if (combo >= 50) {
+    if (combo === 50) {
         bonus = 5;
     }
 
+
     score += bonus;
 
-    // Moneta ogni 5 combo
+
+    /* =========================
+       MONETE
+       ========================= */
+
     if (combo % 5 === 0) {
 
         coins++;
@@ -355,72 +439,77 @@ function handleTap(event) {
             coins
         );
 
-        coinsText.textContent = coins;
+        coinsText.textContent =
+            coins;
 
-        let x = window.innerWidth / 2;
-        let y = window.innerHeight / 2;
 
-        if (event &&
-            event.clientX &&
-            event.clientY) {
-
-            x = event.clientX;
-            y = event.clientY;
-        }
-
-        createCoin(x, y);
+        createCoin(
+            event.clientX,
+            event.clientY
+        );
     }
 
-    scoreText.textContent = score;
 
-    comboText.textContent =
-        combo >= 10
-        ? "🔥 COMBO x" + combo
-        : "";
+    scoreText.textContent =
+        score;
 
-    tapButton.classList.remove("pulse");
+
+    /* =========================
+       COMBO
+       ========================= */
+
+    if (combo >= 10) {
+
+        comboText.textContent =
+            "🔥 COMBO x" + combo;
+
+    } else {
+
+        comboText.textContent = "";
+
+    }
+
+
+    /* =========================
+       ANIMAZIONE
+       ========================= */
+
+    tapButton.classList.remove(
+        "pulse"
+    );
 
     void tapButton.offsetWidth;
 
-    tapButton.classList.add("pulse");
+    tapButton.classList.add(
+        "pulse"
+    );
+
 }
 
 
-// POINTER
+/*
+   IMPORTANTE:
+
+   Usiamo SOLO pointerdown.
+
+   Niente touchstart + click,
+   così un singolo tocco non
+   viene contato due volte.
+*/
+
 tapButton.addEventListener(
     "pointerdown",
     handleTap,
-    { passive: false }
-);
-
-
-// TOUCH
-tapButton.addEventListener(
-    "touchstart",
-    handleTap,
-    { passive: false }
-);
-
-
-// CLICK
-tapButton.addEventListener(
-    "click",
-    function(event) {
-
-        // Il click può essere generato
-        // dopo il touch. Se la partita è già
-        // iniziata, lo ignoriamo per evitare
-        // doppi tap.
-
-        if (event.detail === 0) {
-            handleTap(event);
-        }
-
+    {
+        passive: false
     }
 );
 
 
-// ANIMAZIONE MONETA
+/* =========================
+   CREA MONETA
+   ========================= */
+
 function createCoin(x, y) {
 
     const coin =
@@ -430,68 +519,112 @@ function createCoin(x, y) {
 
     coin.textContent = "🪙";
 
-    coin.style.left = x + "px";
-    coin.style.top = y + "px";
+    coin.style.left =
+        x + "px";
 
-    document.body.appendChild(coin);
+    coin.style.top =
+        y + "px";
+
+
+    document.body.appendChild(
+        coin
+    );
+
 
     setTimeout(function() {
+
         coin.remove();
+
     }, 800);
+
 }
 
 
-// INIZIO PARTITA
+/* =========================
+   INIZIA PARTITA
+   ========================= */
+
 function startGame() {
 
     score = 0;
+
     time = 30;
+
     combo = 0;
 
     playing = true;
 
-    scoreText.textContent = score;
-    timeText.textContent = time;
+    gameStarted = true;
+
+
+    scoreText.textContent =
+        score;
+
+    timeText.textContent =
+        time;
 
     comboText.textContent = "";
+
 
     message.textContent =
         "🔥 Tocca più velocemente possibile!";
 
-    startButton.style.display = "none";
+
+    startButton.style.display =
+        "none";
+
 
     clearInterval(timer);
 
-    timer = setInterval(function() {
 
-        time--;
+    timer = setInterval(
+        function() {
 
-        timeText.textContent = time;
+            time--;
 
-        if (time === 20) {
-            message.textContent =
-                "⚡ Più veloce!";
-        }
+            timeText.textContent =
+                time;
 
-        if (time === 10) {
-            message.textContent =
-                "🔥 ULTIMI 10 SECONDI!";
-        }
 
-        if (time <= 0) {
-            endGame();
-        }
+            if (time === 20) {
 
-    }, 1000);
+                message.textContent =
+                    "⚡ Più veloce!";
+
+            }
+
+
+            if (time === 10) {
+
+                message.textContent =
+                    "🔥 ULTIMI 10 SECONDI!";
+
+            }
+
+
+            if (time <= 0) {
+
+                endGame();
+
+            }
+
+        },
+        1000
+    );
+
 }
 
 
-// FINE PARTITA
+/* =========================
+   FINE PARTITA
+   ========================= */
+
 function endGame() {
 
     playing = false;
 
     clearInterval(timer);
+
 
     if (score > best) {
 
@@ -501,6 +634,7 @@ function endGame() {
             "best",
             best
         );
+
 
         message.textContent =
             "🏆 NUOVO RECORD! " +
@@ -516,15 +650,26 @@ function endGame() {
 
     }
 
+
     comboText.textContent =
         "🏆 Record: " + best;
 
+
+    /*
+       Ora compare un pulsante
+       SEPARATO per ricominciare.
+    */
+
     startButton.style.display =
         "block";
+
 }
 
 
-// RICOMINCIA
+/* =========================
+   GIOCA ANCORA
+   ========================= */
+
 startButton.addEventListener(
     "pointerdown",
     function(event) {
@@ -534,7 +679,9 @@ startButton.addEventListener(
         startGame();
 
     },
-    { passive: false }
+    {
+        passive: false
+    }
 );
 
 </script>
