@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 
 <html lang="it">
+
 <head>
+
 <meta charset="UTF-8">
 
 <meta name="viewport"
@@ -14,35 +16,42 @@ user-scalable=no">
 
 <style>
 
+/* =========================
+   BASE
+   ========================= */
+
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
 }
 
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 100%;
-    overflow: hidden;
+    min-height: 100%;
 }
 
 body {
 
+    min-height: 100vh;
     min-height: 100dvh;
 
+    overflow: hidden;
+
     background:
-    radial-gradient(
-        circle at top,
-        #292060,
-        transparent 45%
-    ),
-    linear-gradient(
-        160deg,
-        #080b1c,
-        #160b36
-    );
+        radial-gradient(
+            circle at top,
+            #292060,
+            transparent 45%
+        ),
+        linear-gradient(
+            160deg,
+            #080b1c,
+            #160b36
+        );
 
     color: white;
 
@@ -55,6 +64,11 @@ body {
     touch-action: manipulation;
 }
 
+
+/* =========================
+   CONTENITORE
+   ========================= */
+
 .game {
 
     width: 100%;
@@ -64,6 +78,11 @@ body {
 
     text-align: center;
 }
+
+
+/* =========================
+   TITOLO
+   ========================= */
 
 h1 {
 
@@ -78,29 +97,62 @@ h1 {
 
     color: #aaa9c7;
 
-    margin-bottom: 22px;
+    margin-bottom: 18px;
 }
+
+
+/* =========================
+   MONETE
+   ========================= */
+
+.coinCounter {
+
+    display: inline-block;
+
+    background:
+        rgba(255,255,255,0.09);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.1);
+
+    border-radius: 20px;
+
+    padding:
+        8px 15px;
+
+    margin-bottom: 18px;
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   STATISTICHE
+   ========================= */
 
 .stats {
 
     display: grid;
 
     grid-template-columns:
-    repeat(3, 1fr);
+        repeat(2, 1fr);
 
     gap: 8px;
 
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 }
 
 .stat {
 
     background:
-    rgba(255,255,255,0.09);
+        rgba(255,255,255,0.09);
 
     border:
-    1px solid
-    rgba(255,255,255,0.08);
+        1px solid
+        rgba(255,255,255,0.08);
 
     border-radius: 15px;
 
@@ -124,7 +176,9 @@ h1 {
 }
 
 
-/* PULSANTE */
+/* =========================
+   PULSANTE TAP
+   ========================= */
 
 #tapArea {
 
@@ -151,16 +205,11 @@ h1 {
     border: none;
 
     background:
-    radial-gradient(
-        circle at 35% 30%,
-        #ffffff,
-        transparent 5%
-    ),
-    linear-gradient(
-        145deg,
-        #00ff9d,
-        #00aaff
-    );
+        linear-gradient(
+            145deg,
+            #00ff9d,
+            #00aaff
+        );
 
     color: #06121b;
 
@@ -169,34 +218,37 @@ h1 {
     font-weight: 900;
 
     box-shadow:
-    0 0 25px
-    rgba(0,255,170,0.5),
+        0 0 25px
+        rgba(0,255,170,0.5),
 
-    0 15px 50px
-    rgba(0,170,255,0.25);
+        0 15px 50px
+        rgba(0,170,255,0.25);
 
     touch-action: manipulation;
 
     cursor: pointer;
 
     transition:
-    transform 0.08s;
+        transform 0.08s;
 }
 
 #tapButton:active {
 
     transform:
-    scale(0.92);
+        scale(0.92);
 }
 
 
-/* ANIMAZIONE TAP */
+/* =========================
+   ANIMAZIONE
+   ========================= */
 
 .pulse {
 
     animation:
-    pulse 0.20s
-    ease-out;
+        pulse
+        0.20s
+        ease-out;
 }
 
 @keyframes pulse {
@@ -204,44 +256,46 @@ h1 {
     0% {
 
         box-shadow:
-        0 0 25px
-        rgba(0,255,170,0.5),
+            0 0 25px
+            rgba(0,255,170,0.5),
 
-        0 15px 50px
-        rgba(0,170,255,0.25);
+            0 15px 50px
+            rgba(0,170,255,0.25);
     }
 
     50% {
 
         box-shadow:
-        0 0 70px
-        rgba(0,255,170,1),
+            0 0 70px
+            rgba(0,255,170,1),
 
-        0 0 100px
-        rgba(0,170,255,0.7);
+            0 0 100px
+            rgba(0,170,255,0.7);
     }
 
     100% {
 
         box-shadow:
-        0 0 25px
-        rgba(0,255,170,0.5),
+            0 0 25px
+            rgba(0,255,170,0.5),
 
-        0 15px 50px
-        rgba(0,170,255,0.25);
+            0 15px 50px
+            rgba(0,170,255,0.25);
     }
 }
 
 
-/* COMBO */
+/* =========================
+   COMBO
+   ========================= */
 
 #combo {
 
     height: 35px;
 
-    margin-top: 8px;
+    margin-top: 5px;
 
-    font-size: 25px;
+    font-size: 24px;
 
     font-weight: bold;
 
@@ -249,7 +303,9 @@ h1 {
 }
 
 
-/* BARRA COMBO */
+/* =========================
+   BARRA COMBO
+   ========================= */
 
 .combo-container {
 
@@ -258,10 +314,10 @@ h1 {
     height: 9px;
 
     margin:
-    5px auto 0;
+        5px auto 0;
 
     background:
-    rgba(255,255,255,0.12);
+        rgba(255,255,255,0.12);
 
     border-radius: 20px;
 
@@ -275,21 +331,23 @@ h1 {
     height: 100%;
 
     background:
-    linear-gradient(
-        90deg,
-        #00ff9d,
-        #00aaff,
-        #ffcc00
-    );
+        linear-gradient(
+            90deg,
+            #00ff9d,
+            #00aaff,
+            #ffcc00
+        );
 
     border-radius: 20px;
 
     transition:
-    width 0.05s linear;
+        width 0.05s linear;
 }
 
 
-/* MESSAGGIO */
+/* =========================
+   MESSAGGIO
+   ========================= */
 
 #message {
 
@@ -303,39 +361,241 @@ h1 {
 }
 
 
-/* PULSANTE RICOMINCIA */
+/* =========================
+   PULSANTI
+   ========================= */
 
-#startButton {
+.actionButton {
 
-    display: none;
+    display: block;
 
-    margin: 15px auto;
+    margin:
+        12px auto;
 
     padding:
-    14px 35px;
+        13px 28px;
 
     border: none;
 
     border-radius: 14px;
 
-    background:
-    linear-gradient(
-        135deg,
-        #ffcc00,
-        #ff9500
-    );
-
-    color: #171000;
-
-    font-size: 19px;
+    font-size: 18px;
 
     font-weight: bold;
 
     touch-action: manipulation;
 }
 
+#startButton {
 
-/* MONETA */
+    display: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffcc00,
+            #ff9500
+        );
+
+    color: #171000;
+}
+
+#shopButton {
+
+    background:
+        linear-gradient(
+            135deg,
+            #8e5cff,
+            #c03cff
+        );
+
+    color: white;
+}
+
+
+/* =========================
+   SCHERMATA NEGOZIO
+   ========================= */
+
+#shopScreen {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    overflow-y: auto;
+
+    padding:
+        25px 15px 40px;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #35256d,
+            transparent 45%
+        ),
+        linear-gradient(
+            160deg,
+            #080b1c,
+            #160b36
+        );
+}
+
+.shopContent {
+
+    width: 100%;
+
+    max-width: 500px;
+
+    margin: auto;
+
+    text-align: center;
+}
+
+.shopTitle {
+
+    font-size: 34px;
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+}
+
+.shopCoins {
+
+    font-size: 20px;
+
+    margin-bottom: 20px;
+}
+
+.skinGrid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 12px;
+}
+
+
+/* =========================
+   CARD SKIN
+   ========================= */
+
+.skin {
+
+    background:
+        rgba(255,255,255,0.08);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.1);
+
+    border-radius: 18px;
+
+    padding: 15px 10px;
+}
+
+.skinName {
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+}
+
+
+/* =========================
+   ANTEPRIMA SKIN
+   ========================= */
+
+.skinPreview {
+
+    width: 90px;
+    height: 90px;
+
+    margin:
+        5px auto 12px;
+
+    border-radius: 50%;
+}
+
+
+/* =========================
+   BOTTONI SKIN
+   ========================= */
+
+.skinButton {
+
+    width: 100%;
+
+    padding: 10px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        #25233b;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: bold;
+}
+
+.skinButton.selected {
+
+    background:
+        #00b978;
+}
+
+.skinButton.buy {
+
+    background:
+        #ffb900;
+
+    color:
+        #201800;
+}
+
+
+/* =========================
+   CHIUDI NEGOZIO
+   ========================= */
+
+#closeShopButton {
+
+    margin-top: 25px;
+
+    padding:
+        13px 30px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+        #333047;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   MONETA ANIMATA
+   ========================= */
 
 .coin {
 
@@ -346,10 +606,10 @@ h1 {
     pointer-events: none;
 
     animation:
-    coinAnimation
-    0.8s
-    ease-out
-    forwards;
+        coinAnimation
+        0.8s
+        ease-out
+        forwards;
 }
 
 @keyframes coinAnimation {
@@ -357,8 +617,8 @@ h1 {
     0% {
 
         transform:
-        translateY(0)
-        scale(1);
+            translateY(0)
+            scale(1);
 
         opacity: 1;
     }
@@ -366,36 +626,10 @@ h1 {
     100% {
 
         transform:
-        translateY(-100px)
-        scale(1.5);
+            translateY(-100px)
+            scale(1.5);
 
         opacity: 0;
-    }
-}
-
-
-/* BONUS COMBO */
-
-.comboFlash {
-
-    animation:
-    comboFlash
-    0.3s
-    ease-out;
-}
-
-@keyframes comboFlash {
-
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.3);
-    }
-
-    100% {
-        transform: scale(1);
     }
 }
 
@@ -405,6 +639,10 @@ h1 {
 
 <body>
 
+<!-- =========================
+     GIOCO
+     ========================= -->
+
 <div class="game">
 
 ```
@@ -412,12 +650,24 @@ h1 {
     ⚡ TAP MASTER
 </h1>
 
+
 <div class="subtitle">
     Mantieni il ritmo!
 </div>
 
 
+<div class="coinCounter">
+
+    🪙
+    <span id="coins">
+        0
+    </span>
+
+</div>
+
+
 <div class="stats">
+
 
     <div class="stat">
 
@@ -426,10 +676,13 @@ h1 {
         </div>
 
         <div class="stat-value">
+
             ⏱️
+
             <span id="time">
                 30
             </span>
+
         </div>
 
     </div>
@@ -442,29 +695,17 @@ h1 {
         </div>
 
         <div class="stat-value">
+
             🏆
+
             <span id="score">
                 0
             </span>
+
         </div>
 
     </div>
 
-
-    <div class="stat">
-
-        <div class="stat-title">
-            MONETE
-        </div>
-
-        <div class="stat-value">
-            🪙
-            <span id="coins">
-                0
-            </span>
-        </div>
-
-    </div>
 
 </div>
 
@@ -472,8 +713,8 @@ h1 {
 <div id="tapArea">
 
     <button
-    id="tapButton"
-    type="button">
+        id="tapButton"
+        type="button">
 
         TAP!
 
@@ -482,16 +723,13 @@ h1 {
 </div>
 
 
-<div
-id="combo">
-
+<div id="combo">
 </div>
 
 
 <div class="combo-container">
 
-    <div
-    id="comboBar">
+    <div id="comboBar">
     </div>
 
 </div>
@@ -505,12 +743,267 @@ id="combo">
 
 
 <button
-id="startButton"
-type="button">
+    id="startButton"
+    class="actionButton"
+    type="button">
 
     🔄 GIOCA ANCORA
 
 </button>
+
+
+<button
+    id="shopButton"
+    class="actionButton"
+    type="button">
+
+    🛍️ NEGOZIO
+
+</button>
+```
+
+</div>
+
+<!-- =========================
+     NEGOZIO
+     ========================= -->
+
+<div id="shopScreen">
+
+```
+<div class="shopContent">
+
+
+    <div class="shopTitle">
+
+        🛍️ NEGOZIO
+
+    </div>
+
+
+    <div class="shopCoins">
+
+        🪙
+        <span id="shopCoins">
+            0
+        </span>
+
+    </div>
+
+
+    <div class="skinGrid">
+
+
+        <!-- NEON -->
+
+        <div class="skin">
+
+            <div class="skinName">
+                🟢 Neon
+            </div>
+
+            <div
+                class="skinPreview"
+                style="
+                background:
+                linear-gradient(
+                145deg,
+                #00ff9d,
+                #00aaff
+                );
+                ">
+            </div>
+
+            <button
+                class="skinButton"
+                id="skinNeon"
+                type="button">
+
+                GRATIS
+
+            </button>
+
+        </div>
+
+
+        <!-- OCEAN -->
+
+        <div class="skin">
+
+            <div class="skinName">
+                🔵 Ocean
+            </div>
+
+            <div
+                class="skinPreview"
+                style="
+                background:
+                linear-gradient(
+                145deg,
+                #008cff,
+                #0050ff
+                );
+                ">
+            </div>
+
+            <button
+                class="skinButton"
+                id="skinOcean"
+                type="button">
+
+                🪙 100
+
+            </button>
+
+        </div>
+
+
+        <!-- PURPLE -->
+
+        <div class="skin">
+
+            <div class="skinName">
+                🟣 Purple
+            </div>
+
+            <div
+                class="skinPreview"
+                style="
+                background:
+                linear-gradient(
+                145deg,
+                #d000ff,
+                #6c00ff
+                );
+                ">
+            </div>
+
+            <button
+                class="skinButton"
+                id="skinPurple"
+                type="button">
+
+                🪙 250
+
+            </button>
+
+        </div>
+
+
+        <!-- FIRE -->
+
+        <div class="skin">
+
+            <div class="skinName">
+                🔥 Fire
+            </div>
+
+            <div
+                class="skinPreview"
+                style="
+                background:
+                linear-gradient(
+                145deg,
+                #ff3b00,
+                #ffcc00
+                );
+                ">
+            </div>
+
+            <button
+                class="skinButton"
+                id="skinFire"
+                type="button">
+
+                🪙 500
+
+            </button>
+
+        </div>
+
+
+        <!-- GOLD -->
+
+        <div class="skin">
+
+            <div class="skinName">
+                🟡 Gold
+            </div>
+
+            <div
+                class="skinPreview"
+                style="
+                background:
+                linear-gradient(
+                145deg,
+                #fff36a,
+                #ff9d00
+                );
+                ">
+            </div>
+
+            <button
+                class="skinButton"
+                id="skinGold"
+                type="button">
+
+                🪙 1000
+
+            </button>
+
+        </div>
+
+
+        <!-- RAINBOW -->
+
+        <div class="skin">
+
+            <div class="skinName">
+                🌈 Rainbow
+            </div>
+
+            <div
+                class="skinPreview"
+                style="
+                background:
+                linear-gradient(
+                135deg,
+                red,
+                orange,
+                yellow,
+                lime,
+                cyan,
+                blue,
+                violet
+                );
+                ">
+            </div>
+
+            <button
+                class="skinButton"
+                id="skinRainbow"
+                type="button">
+
+                🪙 2000
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+    <button
+        id="closeShopButton"
+        type="button">
+
+        ← TORNA AL GIOCO
+
+    </button>
+
+
+</div>
 ```
 
 </div>
@@ -519,20 +1012,20 @@ type="button">
 
 
 /* =========================
-   VARIABILI
+   DATI
    ========================= */
 
 let score = 0;
 
 let coins =
-Number(
-    localStorage.getItem("coins")
-) || 0;
+    Number(
+        localStorage.getItem("coins")
+    ) || 0;
 
 let best =
-Number(
-    localStorage.getItem("best")
-) || 0;
+    Number(
+        localStorage.getItem("best")
+    ) || 0;
 
 let time = 30;
 
@@ -546,13 +1039,55 @@ let timer = null;
 
 let comboTimer = null;
 
+let selectedSkin =
+    localStorage.getItem(
+        "selectedSkin"
+    ) || "neon";
 
-/*
-   Tempo massimo tra due tap
-   per mantenere la combo.
-*/
 
-const COMBO_TIME = 700;
+/* =========================
+   SKIN
+   ========================= */
+
+const skins = {
+
+    neon: {
+        cost: 0,
+        background:
+            "linear-gradient(145deg,#00ff9d,#00aaff)"
+    },
+
+    ocean: {
+        cost: 100,
+        background:
+            "linear-gradient(145deg,#008cff,#0050ff)"
+    },
+
+    purple: {
+        cost: 250,
+        background:
+            "linear-gradient(145deg,#d000ff,#6c00ff)"
+    },
+
+    fire: {
+        cost: 500,
+        background:
+            "linear-gradient(145deg,#ff3b00,#ffcc00)"
+    },
+
+    gold: {
+        cost: 1000,
+        background:
+            "linear-gradient(145deg,#fff36a,#ff9d00)"
+    },
+
+    rainbow: {
+        cost: 2000,
+        background:
+            "linear-gradient(135deg,red,orange,yellow,lime,cyan,blue,violet)"
+    }
+
+};
 
 
 /* =========================
@@ -560,48 +1095,98 @@ const COMBO_TIME = 700;
    ========================= */
 
 const tapButton =
-document.getElementById(
-    "tapButton"
-);
+    document.getElementById(
+        "tapButton"
+    );
 
 const startButton =
-document.getElementById(
-    "startButton"
-);
+    document.getElementById(
+        "startButton"
+    );
+
+const shopButton =
+    document.getElementById(
+        "shopButton"
+    );
+
+const closeShopButton =
+    document.getElementById(
+        "closeShopButton"
+    );
+
+const shopScreen =
+    document.getElementById(
+        "shopScreen"
+    );
 
 const scoreText =
-document.getElementById(
-    "score"
-);
+    document.getElementById(
+        "score"
+    );
 
 const timeText =
-document.getElementById(
-    "time"
-);
+    document.getElementById(
+        "time"
+    );
 
 const coinsText =
-document.getElementById(
-    "coins"
-);
+    document.getElementById(
+        "coins"
+    );
+
+const shopCoins =
+    document.getElementById(
+        "shopCoins"
+    );
 
 const comboText =
-document.getElementById(
-    "combo"
-);
+    document.getElementById(
+        "combo"
+    );
 
 const comboBar =
-document.getElementById(
-    "comboBar"
-);
+    document.getElementById(
+        "comboBar"
+    );
 
 const message =
-document.getElementById(
-    "message"
-);
+    document.getElementById(
+        "message"
+    );
 
 
-coinsText.textContent =
-coins;
+/* =========================
+   MONETE
+   ========================= */
+
+function updateCoins() {
+
+    coinsText.textContent =
+        coins;
+
+    shopCoins.textContent =
+        coins;
+}
+
+
+updateCoins();
+
+
+/* =========================
+   APPLICA SKIN
+   ========================= */
+
+function applySkin() {
+
+    const skin =
+        skins[selectedSkin];
+
+    tapButton.style.background =
+        skin.background;
+}
+
+
+applySkin();
 
 
 /* =========================
@@ -613,11 +1198,6 @@ function handleTap(event) {
     event.preventDefault();
 
 
-    /*
-       Primo tap:
-       avvia la partita.
-    */
-
     if (!gameStarted) {
 
         startGame();
@@ -626,150 +1206,135 @@ function handleTap(event) {
     }
 
 
-    /*
-       Partita finita:
-       TAP non fa niente.
-    */
-
     if (!playing) {
+
         return;
     }
 
 
+    const now =
+        Date.now();
+
+
+    const lastTap =
+        Number(
+            tapButton.dataset.lastTap
+        ) || 0;
+
+
+    const difference =
+        now - lastTap;
+
+
     /*
-       Se il timer combo era
-       ancora attivo, significa
-       che abbiamo mantenuto
-       il ritmo.
+       Se passano più di
+       700 ms perdiamo la combo.
     */
+
+    if (
+        lastTap > 0 &&
+        difference > 700
+    ) {
+
+        combo = 0;
+
+    }
+
+
+    tapButton.dataset.lastTap =
+        now;
+
 
     combo++;
 
 
-    /*
-       Calcolo moltiplicatore.
-    */
+    /* =========================
+       MOLTIPLICATORE
+       ========================= */
 
     let multiplier = 1;
 
 
     if (combo >= 5) {
+
         multiplier = 2;
+
     }
 
 
     if (combo >= 15) {
+
         multiplier = 3;
+
     }
 
 
     if (combo >= 30) {
+
         multiplier = 4;
+
     }
 
 
     if (combo >= 50) {
+
         multiplier = 5;
+
     }
 
-
-    /*
-       Punteggio.
-    */
 
     score += multiplier;
 
 
     scoreText.textContent =
-    score;
+        score;
 
 
-    /*
-       Mostra combo.
-    */
-
-    if (combo >= 5) {
-
-        comboText.textContent =
+    comboText.textContent =
         "🔥 COMBO x" +
         combo +
         "  +" +
         multiplier;
 
-    } else {
 
-        comboText.textContent =
-        "COMBO x" +
-        combo;
-
-    }
-
-
-    /*
-       Animazione combo
-       quando raggiungiamo
-       un nuovo moltiplicatore.
-    */
+    /* =========================
+       MONETA
+       ========================= */
 
     if (
-        combo === 5 ||
-        combo === 15 ||
-        combo === 30 ||
-        combo === 50
+        combo % 5 === 0
     ) {
 
-        comboText.classList.remove(
-            "comboFlash"
-        );
-
-        void comboText.offsetWidth;
-
-        comboText.classList.add(
-            "comboFlash"
-        );
-    }
-
-
-    /*
-       Moneta ogni 5 combo.
-    */
-
-    if (combo % 5 === 0) {
-
         coins++;
+
 
         localStorage.setItem(
             "coins",
             coins
         );
 
-        coinsText.textContent =
-        coins;
+
+        updateCoins();
 
 
         createCoin(
             event.clientX,
             event.clientY
         );
+
     }
 
 
-    /*
-       Riavvia il timer della combo.
-    */
+    startComboTimer();
 
-    resetComboTimer();
-
-
-    /*
-       Animazione pulsante.
-    */
 
     tapButton.classList.remove(
         "pulse"
     );
 
+
     void tapButton.offsetWidth;
+
 
     tapButton.classList.add(
         "pulse"
@@ -782,112 +1347,101 @@ function handleTap(event) {
    TIMER COMBO
    ========================= */
 
-function resetComboTimer() {
-
-    clearTimeout(comboTimer);
-
-
-    let startTime =
-    Date.now();
-
-
-    comboBar.style.width =
-    "100%";
-
-
-    comboTimer =
-    setInterval(function() {
-
-        let elapsed =
-        Date.now() -
-        startTime;
-
-
-        let remaining =
-        Math.max(
-            0,
-            COMBO_TIME -
-            elapsed
-        );
-
-
-        let percentage =
-        (remaining /
-        COMBO_TIME) *
-        100;
-
-
-        comboBar.style.width =
-        percentage + "%";
-
-
-        if (remaining <= 0) {
-
-            clearInterval(
-                comboTimer
-            );
-
-            comboLost();
-
-        }
-
-    }, 20);
-
-}
-
-
-/* =========================
-   COMBO PERSA
-   ========================= */
-
-function comboLost() {
+function startComboTimer() {
 
     clearInterval(
         comboTimer
     );
 
 
-    if (combo > 0) {
+    const start =
+        Date.now();
 
-        combo = 0;
 
-        comboText.textContent =
-        "💨 COMBO PERSA!";
+    comboBar.style.width =
+        "100%";
 
-        comboBar.style.width =
-        "0%";
 
-    }
+    comboTimer =
+        setInterval(
+            function() {
+
+                const elapsed =
+                    Date.now() -
+                    start;
+
+
+                const remaining =
+                    Math.max(
+                        0,
+                        700 - elapsed
+                    );
+
+
+                const percentage =
+                    (
+                        remaining / 700
+                    ) * 100;
+
+
+                comboBar.style.width =
+                    percentage + "%";
+
+
+                if (
+                    remaining <= 0
+                ) {
+
+                    clearInterval(
+                        comboTimer
+                    );
+
+
+                    combo = 0;
+
+
+                    comboText.textContent =
+                        "💨 COMBO PERSA";
+
+
+                    comboBar.style.width =
+                        "0%";
+
+                }
+
+            },
+            20
+        );
 
 }
 
 
 /* =========================
-   CREA MONETA
+   MONETA ANIMATA
    ========================= */
 
 function createCoin(x, y) {
 
     const coin =
-    document.createElement(
-        "div"
-    );
+        document.createElement(
+            "div"
+        );
 
 
     coin.className =
-    "coin";
+        "coin";
 
 
     coin.textContent =
-    "🪙";
+        "🪙";
 
 
     coin.style.left =
-    x + "px";
+        x + "px";
 
 
     coin.style.top =
-    y + "px";
+        y + "px";
 
 
     document.body.appendChild(
@@ -895,11 +1449,14 @@ function createCoin(x, y) {
     );
 
 
-    setTimeout(function() {
+    setTimeout(
+        function() {
 
-        coin.remove();
+            coin.remove();
 
-    }, 800);
+        },
+        800
+    );
 
 }
 
@@ -921,66 +1478,89 @@ function startGame() {
     gameStarted = true;
 
 
+    tapButton.dataset.lastTap =
+        "0";
+
+
     scoreText.textContent =
-    "0";
+        "0";
+
 
     timeText.textContent =
-    "30";
+        "30";
 
 
     comboText.textContent =
-    "";
+        "";
 
 
     comboBar.style.width =
-    "0%";
+        "0%";
 
 
     message.textContent =
-    "🔥 Mantieni il ritmo!";
+        "🔥 Mantieni il ritmo!";
 
 
     startButton.style.display =
-    "none";
+        "none";
 
 
-    clearInterval(timer);
+    shopButton.style.display =
+        "none";
 
-    clearInterval(comboTimer);
+
+    clearInterval(
+        timer
+    );
+
+
+    clearInterval(
+        comboTimer
+    );
 
 
     timer =
-    setInterval(function() {
+        setInterval(
+            function() {
 
-        time--;
+                time--;
 
-        timeText.textContent =
-        time;
-
-
-        if (time === 20) {
-
-            message.textContent =
-            "⚡ Continua!";
-
-        }
+                timeText.textContent =
+                    time;
 
 
-        if (time === 10) {
+                if (
+                    time === 20
+                ) {
 
-            message.textContent =
-            "🔥 ULTIMI 10 SECONDI!";
+                    message.textContent =
+                        "⚡ Continua!";
 
-        }
+                }
 
 
-        if (time <= 0) {
+                if (
+                    time === 10
+                ) {
 
-            endGame();
+                    message.textContent =
+                        "🔥 ULTIMI 10 SECONDI!";
 
-        }
+                }
 
-    }, 1000);
+
+                if (
+                    time <= 0
+                ) {
+
+                    endGame();
+
+                }
+
+            },
+            1000
+        );
 
 }
 
@@ -993,18 +1573,27 @@ function endGame() {
 
     playing = false;
 
-    clearInterval(timer);
 
-    clearInterval(comboTimer);
+    clearInterval(
+        timer
+    );
+
+
+    clearInterval(
+        comboTimer
+    );
 
 
     combo = 0;
 
+
     comboBar.style.width =
-    "0%";
+        "0%";
 
 
-    if (score > best) {
+    if (
+        score > best
+    ) {
 
         best = score;
 
@@ -1016,27 +1605,31 @@ function endGame() {
 
 
         message.textContent =
-        "🏆 NUOVO RECORD! " +
-        score +
-        " PUNTI!";
+            "🏆 NUOVO RECORD! " +
+            score +
+            " PUNTI!";
 
     } else {
 
         message.textContent =
-        "🎉 Hai fatto " +
-        score +
-        " punti!";
+            "🎉 Hai fatto " +
+            score +
+            " punti!";
 
     }
 
 
     comboText.textContent =
-    "🏆 Record: " +
-    best;
+        "🏆 Record: " +
+        best;
 
 
     startButton.style.display =
-    "block";
+        "block";
+
+
+    shopButton.style.display =
+        "block";
 
 }
 
@@ -1061,14 +1654,295 @@ startButton.addEventListener(
 
 
 /* =========================
-   INPUT DEL GIOCO
+   APRI NEGOZIO
    ========================= */
 
-/*
-   Usiamo solamente pointerdown.
-   Questo evita il doppio conteggio
-   dei tap su Android.
-*/
+shopButton.addEventListener(
+    "pointerdown",
+    function(event) {
+
+        event.preventDefault();
+
+        shopScreen.style.display =
+            "block";
+
+        updateShop();
+
+    },
+    {
+        passive: false
+    }
+);
+
+
+/* =========================
+   CHIUDI NEGOZIO
+   ========================= */
+
+closeShopButton.addEventListener(
+    "pointerdown",
+    function(event) {
+
+        event.preventDefault();
+
+        shopScreen.style.display =
+            "none";
+
+    },
+    {
+        passive: false
+    }
+);
+
+
+/* =========================
+   ACQUISTO SKIN
+   ========================= */
+
+function buyOrSelectSkin(name) {
+
+    const skin =
+        skins[name];
+
+
+    const owned =
+        localStorage.getItem(
+            "skin_" + name
+        ) === "true";
+
+
+    /*
+       Se già posseduta,
+       la selezioniamo.
+    */
+
+    if (
+        owned ||
+        name === "neon"
+    ) {
+
+        selectedSkin =
+            name;
+
+
+        localStorage.setItem(
+            "selectedSkin",
+            selectedSkin
+        );
+
+
+        applySkin();
+
+        updateShop();
+
+        return;
+    }
+
+
+    /*
+       Controlliamo le monete.
+    */
+
+    if (
+        coins < skin.cost
+    ) {
+
+        alert(
+            "Non hai abbastanza monete! 🪙"
+        );
+
+        return;
+    }
+
+
+    /*
+       Acquista.
+    */
+
+    coins -= skin.cost;
+
+
+    localStorage.setItem(
+        "coins",
+        coins
+    );
+
+
+    localStorage.setItem(
+        "skin_" + name,
+        "true"
+    );
+
+
+    selectedSkin =
+        name;
+
+
+    localStorage.setItem(
+        "selectedSkin",
+        selectedSkin
+    );
+
+
+    applySkin();
+
+    updateCoins();
+
+    updateShop();
+
+}
+
+
+/* =========================
+   AGGIORNA NEGOZIO
+   ========================= */
+
+function updateShop() {
+
+    const names = [
+        "neon",
+        "ocean",
+        "purple",
+        "fire",
+        "gold",
+        "rainbow"
+    ];
+
+
+    names.forEach(
+        function(name) {
+
+            const button =
+                document.getElementById(
+                    "skin" +
+                    name.charAt(0).toUpperCase() +
+                    name.slice(1)
+                );
+
+
+            if (!button) {
+                return;
+            }
+
+
+            const owned =
+                localStorage.getItem(
+                    "skin_" + name
+                ) === "true";
+
+
+            if (
+                name === "neon" ||
+                owned
+            ) {
+
+                if (
+                    selectedSkin === name
+                ) {
+
+                    button.textContent =
+                        "✓ EQUIPAGGIATA";
+
+                    button.className =
+                        "skinButton selected";
+
+                } else {
+
+                    button.textContent =
+                        "EQUIPAGGIA";
+
+                    button.className =
+                        "skinButton";
+
+                }
+
+            } else {
+
+                button.textContent =
+                    "🪙 " +
+                    skins[name].cost;
+
+                button.className =
+                    "skinButton buy";
+
+            }
+
+        }
+    );
+
+
+    updateCoins();
+
+}
+
+
+/* =========================
+   BOTTONI SKIN
+   ========================= */
+
+document.getElementById(
+    "skinNeon"
+).addEventListener(
+    "pointerdown",
+    function() {
+        buyOrSelectSkin("neon");
+    }
+);
+
+
+document.getElementById(
+    "skinOcean"
+).addEventListener(
+    "pointerdown",
+    function() {
+        buyOrSelectSkin("ocean");
+    }
+);
+
+
+document.getElementById(
+    "skinPurple"
+).addEventListener(
+    "pointerdown",
+    function() {
+        buyOrSelectSkin("purple");
+    }
+);
+
+
+document.getElementById(
+    "skinFire"
+).addEventListener(
+    "pointerdown",
+    function() {
+        buyOrSelectSkin("fire");
+    }
+);
+
+
+document.getElementById(
+    "skinGold"
+).addEventListener(
+    "pointerdown",
+    function() {
+        buyOrSelectSkin("gold");
+    }
+);
+
+
+document.getElementById(
+    "skinRainbow"
+).addEventListener(
+    "pointerdown",
+    function() {
+        buyOrSelectSkin("rainbow");
+    }
+);
+
+
+/* =========================
+   TAP DEL GIOCO
+   ========================= */
 
 tapButton.addEventListener(
     "pointerdown",
@@ -1077,6 +1951,7 @@ tapButton.addEventListener(
         passive: false
     }
 );
+
 
 </script>
 
